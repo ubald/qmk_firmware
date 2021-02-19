@@ -1,5 +1,7 @@
 #include QMK_KEYBOARD_H
 
+#include "ubald.h"
+
 #define _BASE  0
 #define _FN    1
 #define _RGB   2
@@ -97,6 +99,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     default:
       return true;
   }
+}
+
+void rgb_matrix_indicators_user(void) {
+    uint8_t layer = biton32(layer_state);
+    switch (layer) {
+      case _FN:
+        rgb_matrix_set_color_all(255, 255, 255);
+        break;
+    case _SLACK:
+        rgb_matrix_set_color_all(255, 0, 0);
+        break;
+    case _RGB:
+        rgb_matrix_set_color_all(0, 0, 255);
+        break;
+    }
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
